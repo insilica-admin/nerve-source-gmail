@@ -1,6 +1,6 @@
 """Gmail source adapter for Insilica Nerve.
 
-Syncs emails from Gmail API and publishes events to Pub/Sub.
+Syncs emails from Gmail API and writes events to the event store.
 """
 
 import base64
@@ -82,7 +82,7 @@ def parse_email_addresses(header_value: str) -> list[str]:
 class GmailSource(NerveSource):
     """Gmail source adapter.
 
-    Syncs emails from Gmail API and publishes to nerve-source-gmail topic.
+    Syncs emails from Gmail API and writes to the nerve event store.
     """
 
     source_name = "gmail"
@@ -94,7 +94,7 @@ class GmailSource(NerveSource):
     def get_service(self, user_id: str):
         """Get Gmail API service for a user."""
         if user_id not in self._services:
-            credentials = get_gmail_credentials(user_id, self.config.auth_service_url)
+            credentials = get_gmail_credentials(user_id)
             credentials = refresh_if_needed(credentials)
             self._services[user_id] = build("gmail", "v1", credentials=credentials)
         return self._services[user_id]

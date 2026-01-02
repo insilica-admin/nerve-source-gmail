@@ -50,7 +50,7 @@ def cmd_sync(args):
             subject = event.title[:50]
             print(f"  [{ts}] {subject}")
 
-    print(f"\nPublished {count} events to nerve-source-gmail")
+    print(f"\nPublished {count} events to event store")
 
 
 def cmd_watch(args):
@@ -159,7 +159,7 @@ def main():
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     # Sync
-    sync_parser = subparsers.add_parser("sync", help="Sync emails to Pub/Sub")
+    sync_parser = subparsers.add_parser("sync", help="Sync emails to event store")
     sync_parser.add_argument("user", help="User email address")
     sync_parser.add_argument("--since", "-s", help="Sync since date (YYYY-MM-DD)")
     sync_parser.add_argument("--all", "-a", action="store_true", help="Sync all messages")
